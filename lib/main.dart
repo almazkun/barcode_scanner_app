@@ -1,3 +1,4 @@
+import 'package:akun_app/scan.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(SignUpApp());
@@ -51,7 +52,7 @@ class BarcodeScaner extends StatelessWidget {
         primarySwatch: Colors.indigo,
       ),
       home: ScanScreen()
-    )
+    );
   }
 }
 

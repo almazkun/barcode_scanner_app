@@ -8,7 +8,7 @@ class ScanScreen extends StatefulWidget {
   _ScanState createState() => new _ScanState();
 }
 
-class _ScanState extends State<ScanScreeen> {
+class _ScanState extends State<ScanScreen> {
   String barcode = "";
   @override
   void initState() {
@@ -56,12 +56,33 @@ class _ScanState extends State<ScanScreeen> {
           ],
         ),
       ),
-    )
+    );
+  }
+  Future scan() async {
+    try {
+      String barcode = (await BarcodeScanner.scan()) as String;
+      setState(() {
+        this.barcode = barcode;
+      });
+    } on PlatformException catch(e) {
+      if (e.code == BarcodeScanner.cameraAccessDenied) {
+        setState(() {
+          this.barcode = 'Camera permission in not granted';
+        });
+      } else {
+        setState(() {
+          this.barcode = 'Unknown Error: $e';
+        });
+      }
+    } on FormatException {
+      setState(() {
+        this.barcode = 'null (User didn\'n scan anything)';
+      });
+    } catch (e) {
+      setState(() {
+        this.barcode = 'Unknown Error: $e';
+      });
+    }
   }
 }
 
-Future scan() async {
-  try {
-
-  }
-}
